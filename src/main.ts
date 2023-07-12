@@ -20,7 +20,7 @@ router
     ctx.body = 'Hello World!123'
   })
 
-app.use(router.routes()).use(logger()).listen(3000)
+app.use(router.routes()).use(logger()).listen(3000, 'localhost')
 
 function allowCORS(ctx: Koa.Context) {
   ctx.set('Access-Control-Allow-Origin', 'bluecalendar.netlify.app')
