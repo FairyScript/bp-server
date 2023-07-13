@@ -1,7 +1,7 @@
 import Koa from 'koa'
 
 export function allowCORS(ctx: Koa.Context) {
-  ctx.set('Access-Control-Allow-Origin', 'bluecalendar.netlify.app')
+  ctx.set('Access-Control-Allow-Origin', process.env.CORS_ORIGINS ?? '')
   ctx.set(
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept'
