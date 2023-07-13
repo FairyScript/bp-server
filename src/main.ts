@@ -1,20 +1,27 @@
 import Koa from 'koa'
 import Router from '@koa/router'
 import logger from 'koa-logger'
+import { config } from 'dotenv'
+import { allowCORS } from './utils/allowCORS'
+import { queryBoardQuests } from './api/api'
+
+config()
 
 const app = new Koa()
 const router = new Router()
 
 router
-  .get('/api(.*)', (ctx, next) => {
+  .get('/api(.*)', async (ctx, next) => {
     allowCORS(ctx)
-    next()
+    await next()
   })
-  .get('/api/searchBoard', (ctx, next) => {
+  .get('/api/searchBoard', async (ctx) => {
     const req = ctx.request.query
-    ctx.body = req
-
-    next()
+    const search = (req.q as string) ?? ''
+    const pageIndex = (req.pageIndex as string) ?? '0'
+    const pageSize = (req.pageSize as string) ?? '10'
+    const res = await queryBoardQuests(search, +pageIndex, +pageSize)
+    ctx.body = res
   })
   .get('/', (ctx) => {
     ctx.body = 'Hello World!123'
@@ -22,13 +29,4 @@ router
 
 app.use(router.routes()).use(logger()).listen(3000, 'localhost')
 
-function allowCORS(ctx: Koa.Context) {
-  ctx.set('Access-Control-Allow-Origin', 'bluecalendar.netlify.app')
-  ctx.set(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  )
-  ctx.set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS')
-}
-
-export {}
+export default {}
