@@ -7,11 +7,12 @@ import '@tsed/swagger'
 import { config } from './config/index'
 import * as api from './controllers/api/index'
 import * as pages from './controllers/pages/index'
+import { envs } from './config/envs'
 
 @Configuration({
   ...config,
   acceptMimes: ['application/json'],
-  httpPort: process.env.PORT || 8083,
+  httpPort: `127.0.0.1:${envs.PORT || 8083}`,
   httpsPort: false, // CHANGE
   disableComponentsScan: true,
   mount: {
