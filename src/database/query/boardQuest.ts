@@ -1,6 +1,5 @@
 import { $log } from '@tsed/common'
 import { client } from '../instance'
-import { envs } from 'src/config/envs'
 
 export function queryBoardQuest(text: string, page: number, size: number) {
   const pipeline = [
@@ -97,7 +96,7 @@ export function queryBoardQuest(text: string, page: number, size: number) {
   $log.debug(pipeline)
 
   return client
-    .db(envs.DATABASE_NAME)
+    .db(process.env.DATABASE_NAME)
     .collection('texts')
     .aggregate(pipeline)
     .toArray()

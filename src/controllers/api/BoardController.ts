@@ -1,7 +1,7 @@
 import { Controller } from '@tsed/di'
 import { Default, Description, Get, Required } from '@tsed/schema'
 import { QueryParams } from '@tsed/platform-params'
-import { queryBoardQuest } from 'src/database/query/boardQuest'
+import { queryBoardQuest } from '../../database/query/boardQuest'
 import { $log } from '@tsed/common'
 import { BadRequest } from '@tsed/exceptions'
 
